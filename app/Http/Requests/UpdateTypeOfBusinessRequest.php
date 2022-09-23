@@ -1,0 +1,27 @@
+<?php
+
+namespace App\Http\Requests;
+
+use App\Models\TypeOfBusiness;
+use Gate;
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Response;
+
+class UpdateTypeOfBusinessRequest extends FormRequest
+{
+    public function authorize()
+    {
+        return Gate::allows('type_of_business_edit');
+    }
+
+    public function rules()
+    {
+        return [
+            'name' => [
+                'string',
+                'required',
+                'unique:type_of_businesses,name,' . request()->route('type_of_business')->id,
+            ],
+        ];
+    }
+}
