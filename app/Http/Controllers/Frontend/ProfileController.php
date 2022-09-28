@@ -21,7 +21,27 @@ class ProfileController extends Controller
         $user = auth()->user();
 
         $user->update($request->validated());
+        if ($request->input('photo', false)) {
+            if (!$user->photo || $request->input('photo') !== $user->photo->file_name) {
+                if ($user->photo) {
+                    $user->photo->delete();
+                }
+                $user->addMedia(storage_path('tmp/uploads/' . basename($request->input('photo'))))->toMediaCollection('photo');
+            }
+        } elseif ($user->photo) {
+            $user->photo->delete();
+        }
 
+        if ($request->input('file_ktp', false)) {
+            if (!$user->file_ktp || $request->input('file_ktp') !== $user->file_ktp->file_name) {
+                if ($user->file_ktp) {
+                    $user->file_ktp->delete();
+                }
+                $user->addMedia(storage_path('tmp/uploads/' . basename($request->input('file_ktp'))))->toMediaCollection('file_ktp');
+            }
+        } elseif ($user->file_ktp) {
+            $user->file_ktp->delete();
+        }
         return redirect()->route('frontend.profile.index')->with('message', __('global.update_profile_success'));
     }
 

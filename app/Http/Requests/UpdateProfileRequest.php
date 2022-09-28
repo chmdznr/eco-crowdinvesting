@@ -31,6 +31,32 @@ class UpdateProfileRequest extends FormRequest
         return [
             'name'  => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . auth()->id()],
+            'nik' => [
+                'string',
+                'min:16',
+                'max:16',
+                'nullable',
+            ],
+            'tempat_lahir' => [
+                'string',
+                'nullable',
+            ],
+            'alamat' => [
+                'string',
+                'nullable',
+            ],
+            'tanggal_lahir' => [
+                'date_format:' . config('panel.date_format'),
+                'nullable',
+            ],
+            'jenis_kelamin' => [
+                'required',
+            ],
+            'no_hp' => [
+                'string',
+                'max:12',
+                'nullable',
+            ],
         ];
     }
 }
