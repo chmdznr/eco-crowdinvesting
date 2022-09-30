@@ -1,22 +1,21 @@
 @extends('layouts.frontend')
+@section('subtitle', trans('cruds.typeOfBusiness.title_singular').' '.trans('global.list'))
 @section('content')
-<div class="container">
+<div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            @can('type_of_business_create')
-                <div style="margin-bottom: 10px;" class="row">
-                    <div class="col-lg-12">
-                        <a class="btn btn-success" href="{{ route('frontend.type-of-businesses.create') }}">
-                            {{ trans('global.add') }} {{ trans('cruds.typeOfBusiness.title_singular') }}
-                        </a>
-                    </div>
-                </div>
-            @endcan
             <div class="card">
                 <div class="card-header">
-                    {{ trans('cruds.typeOfBusiness.title_singular') }} {{ trans('global.list') }}
+                    @can('type_of_business_create')
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <a class="btn btn-success" href="{{ route('frontend.type-of-businesses.create') }}">
+                                    {{ trans('global.add') }} {{ trans('cruds.typeOfBusiness.title_singular') }}
+                                </a>
+                            </div>
+                        </div>
+                    @endcan
                 </div>
-
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class=" table table-bordered table-striped table-hover datatable datatable-TypeOfBusiness">

@@ -1,7 +1,8 @@
 @extends('layouts.frontend')
+@section('subtitle', trans('global.my_profile'))
 @section('content')
 
-<div class="container">
+<div class="container-fluid">
     <div class="row">
         <div class="col-12">
             <div class="card">

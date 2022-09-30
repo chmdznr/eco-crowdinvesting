@@ -1,20 +1,20 @@
 @extends('layouts.frontend')
+@section('subtitle', trans('cruds.marketAccessType.title_singular').' '.trans('global.list'))
 @section('content')
-<div class="container">
+<div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            @can('market_access_type_create')
-                <div style="margin-bottom: 10px;" class="row">
-                    <div class="col-lg-12">
-                        <a class="btn btn-success" href="{{ route('frontend.market-access-types.create') }}">
-                            {{ trans('global.add') }} {{ trans('cruds.marketAccessType.title_singular') }}
-                        </a>
-                    </div>
-                </div>
-            @endcan
             <div class="card">
                 <div class="card-header">
-                    {{ trans('cruds.marketAccessType.title_singular') }} {{ trans('global.list') }}
+                    @can('market_access_type_create')
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <a class="btn btn-success" href="{{ route('frontend.market-access-types.create') }}">
+                                    {{ trans('global.add') }} {{ trans('cruds.marketAccessType.title_singular') }}
+                                </a>
+                            </div>
+                        </div>
+                    @endcan
                 </div>
 
                 <div class="card-body">

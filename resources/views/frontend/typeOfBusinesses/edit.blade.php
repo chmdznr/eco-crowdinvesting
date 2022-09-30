@@ -1,12 +1,15 @@
 @extends('layouts.frontend')
+@section('subtitle', trans('global.edit').' '.trans('cruds.typeOfBusiness.title_singular'))
 @section('content')
-<div class="container">
+<div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-12">
 
             <div class="card">
                 <div class="card-header">
-                    {{ trans('global.edit') }} {{ trans('cruds.typeOfBusiness.title_singular') }}
+                    <a class="btn btn-default" href="{{ route('frontend.type-of-businesses.index') }}">
+                        {{ trans('global.back_to_list') }}
+                    </a>
                 </div>
 
                 <div class="card-body">

@@ -130,3 +130,10 @@ table.dataTable thead .sorting_desc {
 .custom-select.form-control-sm {
     padding: 0.25rem 1.5rem;
 }
+header .content-header{
+    width: 100% !important;
+}
+.content.content-full{
+    width: 96% !important;
+    padding: 0rem 0rem 0px !important;
+}
