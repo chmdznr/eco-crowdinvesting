@@ -2,21 +2,22 @@
 
 namespace App\Models;
 
-use \DateTimeInterface;
-use App\Notifications\VerifyUserNotification;
-use App\Traits\Auditable;
-use Carbon\Carbon;
 use Hash;
-use Illuminate\Auth\Notifications\ResetPassword;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Carbon\Carbon;
+use \DateTimeInterface;
+use App\Traits\Auditable;
 use Illuminate\Support\Str;
+use Laravel\Sanctum\HasApiTokens;
 use Spatie\MediaLibrary\HasMedia;
+use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use App\Notifications\VerifyUserNotification;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Auth\Notifications\ResetPassword;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements HasMedia
 {
@@ -25,6 +26,7 @@ class User extends Authenticatable implements HasMedia
     use InteractsWithMedia;
     use Auditable;
     use HasFactory;
+    use HasApiTokens;
 
     public const JENIS_KELAMIN_SELECT = [
         'L' => 'Laki-laki',

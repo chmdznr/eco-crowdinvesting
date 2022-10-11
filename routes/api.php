@@ -1,5 +1,9 @@
 <?php
 
+Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', 'middleware' => ['guest']], function () {
+    Route::post('login', 'AuthApiController@login');
+});
+
 Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', 'middleware' => ['auth:sanctum']], function () {
     // Permissions
     Route::apiResource('permissions', 'PermissionsApiController');
@@ -64,4 +68,5 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     // Enterprise Doc
     Route::post('enterprise-docs/media', 'EnterpriseDocApiController@storeMedia')->name('enterprise-docs.storeMedia');
     Route::apiResource('enterprise-docs', 'EnterpriseDocApiController');
+    Route::post('logout', 'AuthApiController@logout');
 });
