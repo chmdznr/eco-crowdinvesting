@@ -16,8 +16,8 @@ class TypeOfBusinessApiController extends Controller
     /**
      * @OA\Get(
      *     path="/api/v1/type-of-businesses",
-     *     tags={"TypeOfBusinessApi"},
-     *     operationId="index",
+     *     tags={"TypeOfBusiness"},
+     *     operationId="TypeOfBusinessIndex",
      *     @OA\Response(
      *         response=200,
      *         description="successful operation"
@@ -38,9 +38,9 @@ class TypeOfBusinessApiController extends Controller
      /**
      * @OA\Post(
      *     path="/api/v1/type-of-businesses",
-     *     tags={"TypeOfBusinessApi"},
+     *     tags={"TypeOfBusiness"},
      *     summary="",
-     *     operationId="store",
+     *     operationId="TypeOfBusinessStore",
      *     @OA\RequestBody(
      *          @OA\MediaType(
      *            mediaType="application/json",
@@ -71,9 +71,9 @@ class TypeOfBusinessApiController extends Controller
     /**
      * @OA\Get(
      *     path="/api/v1/type-of-businesses/{id}",
-     *     tags={"TypeOfBusinessApi"},
+     *     tags={"TypeOfBusiness"},
      *     summary="",
-     *     operationId="show",
+     *     operationId="TypeOfBusinessShow",
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -103,9 +103,9 @@ class TypeOfBusinessApiController extends Controller
     /**
      * @OA\Put(
      *     path="/api/v1/type-of-businesses/{id}",
-     *     tags={"TypeOfBusinessApi"},
+     *     tags={"TypeOfBusiness"},
      *     summary="",
-     *     operationId="update",
+     *     operationId="TypeOfBusinessUpdate",
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -145,10 +145,9 @@ class TypeOfBusinessApiController extends Controller
     /**
      * @OA\Delete(
      *     path="/api/v1/type-of-businesses/{id}",
-     *     tags={"TypeOfBusinessApi"},
+     *     tags={"TypeOfBusiness"},
      *     summary="",
-     *     description="Returns list",
-     *     operationId="destroy",
+     *     operationId="TypeOfBusinessDestroy",
      *     @OA\Parameter(
      *         name="id",
      *         in="path",

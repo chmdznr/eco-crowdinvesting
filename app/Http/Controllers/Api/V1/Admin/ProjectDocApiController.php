@@ -15,14 +15,55 @@ use Symfony\Component\HttpFoundation\Response;
 class ProjectDocApiController extends Controller
 {
     use MediaUploadingTrait;
-
+    /**
+     * @OA\Get(
+     *     path="/api/v1/project-docs",
+     *     tags={"ProjectDoc"},
+     *     operationId="ProjectDocIndex",
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation"
+     *     ),
+     *     security={
+     *         {"sanctum": {}}
+     *     }
+     * )
+     *
+     * @param int $id
+     */
     public function index()
     {
         abort_if(Gate::denies('project_doc_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new ProjectDocResource(ProjectDoc::with(['project', 'created_by'])->get());
     }
-
+    /**
+     * @OA\Post(
+     *     path="/api/v1/project-docs",
+     *     tags={"ProjectDoc"},
+     *     summary="",
+     *     operationId="ProjectDocStore",
+     *     @OA\RequestBody(
+     *          @OA\MediaType(
+     *            mediaType="application/json",
+     *            @OA\Schema(
+     *              @OA\Property(property="project_id",type="number"),
+     *              @OA\Property(property="name",type="string"),
+     *              @OA\Property(property="lampiran",type="array", @OA\Items(type="object"))
+     *            )
+     *          )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation"
+     *     ),
+     *     security={
+     *         {"sanctum": {}}
+     *     }
+     * )
+     *
+     * @param int $id
+     */
     public function store(StoreProjectDocRequest $request)
     {
         $projectDoc = ProjectDoc::create($request->all());
@@ -35,14 +76,74 @@ class ProjectDocApiController extends Controller
             ->response()
             ->setStatusCode(Response::HTTP_CREATED);
     }
-
+    /**
+     * @OA\Get(
+     *     path="/api/v1/project-docs/{id}",
+     *     tags={"ProjectDoc"},
+     *     summary="",
+     *     operationId="ProjectDocShow",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *             format="int64"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation"
+     *     ),
+     *     security={
+     *         {"sanctum": {}}
+     *     }
+     * )
+     *
+     * @param int $id
+     */
     public function show(ProjectDoc $projectDoc)
     {
         abort_if(Gate::denies('project_doc_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new ProjectDocResource($projectDoc->load(['project', 'created_by']));
     }
-
+    /**
+     * @OA\Put(
+     *     path="/api/v1/project-docs/{id}",
+     *     tags={"ProjectDoc"},
+     *     summary="",
+     *     operationId="ProjectDocUpdate",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *             format="int64"
+     *         )
+     *     ),
+     *     @OA\RequestBody(
+     *          @OA\MediaType(
+     *            mediaType="application/json",
+     *            @OA\Schema(
+     *              @OA\Property(property="project_id",type="number"),
+     *              @OA\Property(property="name",type="string"),
+     *              @OA\Property(property="lampiran",type="array", @OA\Items(type="object"))
+     *            )
+     *          )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation"
+     *     ),
+     *     security={
+     *         {"sanctum": {}}
+     *     }
+     * )
+     *
+     * @param int $id
+     */
     public function update(UpdateProjectDocRequest $request, ProjectDoc $projectDoc)
     {
         $projectDoc->update($request->all());
@@ -65,7 +166,32 @@ class ProjectDocApiController extends Controller
             ->response()
             ->setStatusCode(Response::HTTP_ACCEPTED);
     }
-
+    /**
+     * @OA\Delete(
+     *     path="/api/v1/project-docs/{id}",
+     *     tags={"ProjectDoc"},
+     *     summary="",
+     *     operationId="ProjectDocDestroy",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *             format="int64"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation"
+     *     ),
+     *     security={
+     *         {"sanctum": {}}
+     *     }
+     * )
+     *
+     * @param int $id
+     */
     public function destroy(ProjectDoc $projectDoc)
     {
         abort_if(Gate::denies('project_doc_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');

@@ -15,14 +15,55 @@ use Symfony\Component\HttpFoundation\Response;
 class EnterpriseDocApiController extends Controller
 {
     use MediaUploadingTrait;
-
+     /**
+     * @OA\Get(
+     *     path="/api/v1/enterprise-docs",
+     *     tags={"EnterpriseDoc"},
+     *     operationId="EnterpriseDocIndex",
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation"
+     *     ),
+     *     security={
+     *         {"sanctum": {}}
+     *     }
+     * )
+     *
+     * @param int $id
+     */
     public function index()
     {
         abort_if(Gate::denies('enterprise_doc_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new EnterpriseDocResource(EnterpriseDoc::with(['umkm', 'created_by'])->get());
     }
-
+    /**
+     * @OA\Post(
+     *     path="/api/v1/enterprise-docs",
+     *     tags={"EnterpriseDoc"},
+     *     summary="",
+     *     operationId="EnterpriseDocStore",
+     *     @OA\RequestBody(
+     *          @OA\MediaType(
+     *            mediaType="application/json",
+     *            @OA\Schema(
+     *              @OA\Property(property="umkm_id",type="number"),
+     *              @OA\Property(property="name",type="string"),
+     *              @OA\Property(property="lampiran",type="array", @OA\Items(type="object"))
+     *            )
+     *          )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation"
+     *     ),
+     *     security={
+     *         {"sanctum": {}}
+     *     }
+     * )
+     *
+     * @param int $id
+     */
     public function store(StoreEnterpriseDocRequest $request)
     {
         $enterpriseDoc = EnterpriseDoc::create($request->all());
@@ -35,14 +76,74 @@ class EnterpriseDocApiController extends Controller
             ->response()
             ->setStatusCode(Response::HTTP_CREATED);
     }
-
+    /**
+     * @OA\Get(
+     *     path="/api/v1/enterprise-docs/{id}",
+     *     tags={"EnterpriseDoc"},
+     *     summary="",
+     *     operationId="EnterpriseDocShow",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *             format="int64"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation"
+     *     ),
+     *     security={
+     *         {"sanctum": {}}
+     *     }
+     * )
+     *
+     * @param int $id
+     */
     public function show(EnterpriseDoc $enterpriseDoc)
     {
         abort_if(Gate::denies('enterprise_doc_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new EnterpriseDocResource($enterpriseDoc->load(['umkm', 'created_by']));
     }
-
+    /**
+     * @OA\Put(
+     *     path="/api/v1/enterprise-docs/{id}",
+     *     tags={"EnterpriseDoc"},
+     *     summary="",
+     *     operationId="EnterpriseDocUpdate",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *             format="int64"
+     *         )
+     *     ),
+     *     @OA\RequestBody(
+     *          @OA\MediaType(
+     *            mediaType="application/json",
+     *            @OA\Schema(
+     *              @OA\Property(property="umkm_id",type="number"),
+     *              @OA\Property(property="name",type="string"),
+     *              @OA\Property(property="lampiran",type="array", @OA\Items(type="object"))
+     *            )
+     *          )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation"
+     *     ),
+     *     security={
+     *         {"sanctum": {}}
+     *     }
+     * )
+     *
+     * @param int $id
+     */
     public function update(UpdateEnterpriseDocRequest $request, EnterpriseDoc $enterpriseDoc)
     {
         $enterpriseDoc->update($request->all());
@@ -65,7 +166,32 @@ class EnterpriseDocApiController extends Controller
             ->response()
             ->setStatusCode(Response::HTTP_ACCEPTED);
     }
-
+    /**
+     * @OA\Delete(
+     *     path="/api/v1/enterprise-docs/{id}",
+     *     tags={"EnterpriseDoc"},
+     *     summary="",
+     *     operationId="EnterpriseDocDestroy",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *             format="int64"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation"
+     *     ),
+     *     security={
+     *         {"sanctum": {}}
+     *     }
+     * )
+     *
+     * @param int $id
+     */
     public function destroy(EnterpriseDoc $enterpriseDoc)
     {
         abort_if(Gate::denies('enterprise_doc_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');

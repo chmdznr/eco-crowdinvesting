@@ -15,14 +15,56 @@ use Symfony\Component\HttpFoundation\Response;
 class ContentPageApiController extends Controller
 {
     use MediaUploadingTrait;
-
+    /**
+     * @OA\Get(
+     *     path="/api/v1/content-pages",
+     *     tags={"ContentPage"},
+     *     operationId="ContentPageIndex",
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation"
+     *     ),
+     *     security={
+     *         {"sanctum": {}}
+     *     }
+     * )
+     *
+     * @param int $id
+     */
     public function index()
     {
         abort_if(Gate::denies('content_page_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new ContentPageResource(ContentPage::with(['categories', 'tags'])->get());
     }
-
+    /**
+     * @OA\Post(
+     *     path="/api/v1/content-pages",
+     *     tags={"ContentPage"},
+     *     summary="",
+     *     operationId="ContentPageStore",
+     *     @OA\RequestBody(
+     *          @OA\MediaType(
+     *            mediaType="application/json",
+     *            @OA\Schema(
+     *              @OA\Property(property="title",type="string"),
+     *              @OA\Property(property="categories",type="array", @OA\Items(type="number")),
+     *              @OA\Property(property="tags",type="array", @OA\Items(type="number")),
+     *              @OA\Property(property="lampiran",type="array", @OA\Items(type="string")),
+     *            )
+     *          )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation"
+     *     ),
+     *     security={
+     *         {"sanctum": {}}
+     *     }
+     * )
+     *
+     * @param int $id
+     */
     public function store(StoreContentPageRequest $request)
     {
         $contentPage = ContentPage::create($request->all());
@@ -40,14 +82,75 @@ class ContentPageApiController extends Controller
             ->response()
             ->setStatusCode(Response::HTTP_CREATED);
     }
-
+    /**
+     * @OA\Get(
+     *     path="/api/v1/content-pages/{id}",
+     *     tags={"ContentPage"},
+     *     summary="",
+     *     operationId="ContentPageShow",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *             format="int64"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation"
+     *     ),
+     *     security={
+     *         {"sanctum": {}}
+     *     }
+     * )
+     *
+     * @param int $id
+     */
     public function show(ContentPage $contentPage)
     {
         abort_if(Gate::denies('content_page_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new ContentPageResource($contentPage->load(['categories', 'tags']));
     }
-
+    /**
+     * @OA\Put(
+     *     path="/api/v1/content-pages/{id}",
+     *     tags={"ContentPage"},
+     *     summary="",
+     *     operationId="ContentPageUpdate",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *             format="int64"
+     *         )
+     *     ),
+     *     @OA\RequestBody(
+     *          @OA\MediaType(
+     *            mediaType="application/json",
+     *            @OA\Schema(
+     *              @OA\Property(property="title",type="string"),
+     *              @OA\Property(property="categories",type="array", @OA\Items(type="number")),
+     *              @OA\Property(property="tags",type="array", @OA\Items(type="number")),
+     *              @OA\Property(property="lampiran",type="array", @OA\Items(type="string")),
+     *            )
+     *          )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation"
+     *     ),
+     *     security={
+     *         {"sanctum": {}}
+     *     }
+     * )
+     *
+     * @param int $id
+     */
     public function update(UpdateContentPageRequest $request, ContentPage $contentPage)
     {
         $contentPage->update($request->all());
@@ -82,7 +185,32 @@ class ContentPageApiController extends Controller
             ->response()
             ->setStatusCode(Response::HTTP_ACCEPTED);
     }
-
+    /**
+     * @OA\Delete(
+     *     path="/api/v1/content-pages/{id}",
+     *     tags={"ContentPage"},
+     *     summary="",
+     *     operationId="ContentPageDestroy",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *             format="int64"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation"
+     *     ),
+     *     security={
+     *         {"sanctum": {}}
+     *     }
+     * )
+     *
+     * @param int $id
+     */
     public function destroy(ContentPage $contentPage)
     {
         abort_if(Gate::denies('content_page_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');

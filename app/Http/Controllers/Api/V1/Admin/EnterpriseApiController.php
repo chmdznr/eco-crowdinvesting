@@ -15,14 +15,57 @@ use Symfony\Component\HttpFoundation\Response;
 class EnterpriseApiController extends Controller
 {
     use MediaUploadingTrait;
-
+     /**
+     * @OA\Get(
+     *     path="/api/v1/enterprises",
+     *     tags={"Enterprise"},
+     *     operationId="EnterpriseIndex",
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation"
+     *     ),
+     *     security={
+     *         {"sanctum": {}}
+     *     }
+     * )
+     *
+     * @param int $id
+     */
     public function index()
     {
         abort_if(Gate::denies('enterprise_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new EnterpriseResource(Enterprise::with(['jenis_usaha', 'pemilik', 'created_by'])->get());
     }
-
+    /**
+     * @OA\Post(
+     *     path="/api/v1/enterprises",
+     *     tags={"Enterprise"},
+     *     summary="",
+     *     operationId="EnterpriseStore",
+     *     @OA\RequestBody(
+     *          @OA\MediaType(
+     *            mediaType="application/json",
+     *            @OA\Schema(
+     *              @OA\Property(property="nib",type="string"),
+     *              @OA\Property(property="name",type="string"),
+     *              @OA\Property(property="skala_usaha",type="string"),
+     *              @OA\Property(property="pemilik_id",type="number"),
+     *              @OA\Property(property="gallery",type="array", @OA\Items(type="string")),
+     *            )
+     *          )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation"
+     *     ),
+     *     security={
+     *         {"sanctum": {}}
+     *     }
+     * )
+     *
+     * @param int $id
+     */
     public function store(StoreEnterpriseRequest $request)
     {
         $enterprise = Enterprise::create($request->all());
@@ -35,14 +78,76 @@ class EnterpriseApiController extends Controller
             ->response()
             ->setStatusCode(Response::HTTP_CREATED);
     }
-
+    /**
+     * @OA\Get(
+     *     path="/api/v1/enterprises/{id}",
+     *     tags={"Enterprise"},
+     *     summary="",
+     *     operationId="EnterpriseShow",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *             format="int64"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation"
+     *     ),
+     *     security={
+     *         {"sanctum": {}}
+     *     }
+     * )
+     *
+     * @param int $id
+     */
     public function show(Enterprise $enterprise)
     {
         abort_if(Gate::denies('enterprise_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new EnterpriseResource($enterprise->load(['jenis_usaha', 'pemilik', 'created_by']));
     }
-
+    /**
+     * @OA\Put(
+     *     path="/api/v1/enterprises/{id}",
+     *     tags={"Enterprise"},
+     *     summary="",
+     *     operationId="EnterpriseUpdate",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *             format="int64"
+     *         )
+     *     ),
+     *     @OA\RequestBody(
+     *          @OA\MediaType(
+     *            mediaType="application/json",
+     *            @OA\Schema(
+     *              @OA\Property(property="nib",type="string"),
+     *              @OA\Property(property="name",type="string"),
+     *              @OA\Property(property="skala_usaha",type="string"),
+     *              @OA\Property(property="pemilik_id",type="number"),
+     *              @OA\Property(property="gallery",type="array", @OA\Items(type="string")),
+     *            )
+     *          )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation"
+     *     ),
+     *     security={
+     *         {"sanctum": {}}
+     *     }
+     * )
+     *
+     * @param int $id
+     */
     public function update(UpdateEnterpriseRequest $request, Enterprise $enterprise)
     {
         $enterprise->update($request->all());
@@ -65,7 +170,32 @@ class EnterpriseApiController extends Controller
             ->response()
             ->setStatusCode(Response::HTTP_ACCEPTED);
     }
-
+    /**
+     * @OA\Delete(
+     *     path="/api/v1/enterprises/{id}",
+     *     tags={"Enterprise"},
+     *     summary="",
+     *     operationId="EnterpriseDestroy",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *             format="int64"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation"
+     *     ),
+     *     security={
+     *         {"sanctum": {}}
+     *     }
+     * )
+     *
+     * @param int $id
+     */
     public function destroy(Enterprise $enterprise)
     {
         abort_if(Gate::denies('enterprise_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
