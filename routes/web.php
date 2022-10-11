@@ -64,8 +64,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('time-entries', 'TimeEntryController');
 
     // Time Report
-    // Route::delete('time-reports/destroy', 'TimeReportController@massDestroy')->name('time-reports.massDestroy');
-    // Route::resource('time-reports', 'TimeReportController');
+    Route::delete('time-reports/destroy', 'TimeReportController@massDestroy')->name('time-reports.massDestroy');
+    Route::resource('time-reports', 'TimeReportController');
 
     // Task Status
     Route::delete('task-statuses/destroy', 'TaskStatusController@massDestroy')->name('task-statuses.massDestroy');
@@ -82,7 +82,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('tasks', 'TaskController');
 
     // Tasks Calendar
-    // Route::resource('tasks-calendars', 'TasksCalendarController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
+    Route::resource('tasks-calendars', 'TasksCalendarController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
 
     // Financial Access Type
     Route::delete('financial-access-types/destroy', 'FinancialAccessTypeController@massDestroy')->name('financial-access-types.massDestroy');
@@ -197,8 +197,8 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     Route::resource('time-entries', 'TimeEntryController');
 
     // Time Report
-    // Route::delete('time-reports/destroy', 'TimeReportController@massDestroy')->name('time-reports.massDestroy');
-    // Route::resource('time-reports', 'TimeReportController');
+    Route::delete('time-reports/destroy', 'TimeReportController@massDestroy')->name('time-reports.massDestroy');
+    Route::resource('time-reports', 'TimeReportController');
 
     // Task Status
     Route::delete('task-statuses/destroy', 'TaskStatusController@massDestroy')->name('task-statuses.massDestroy');
@@ -215,7 +215,7 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     Route::resource('tasks', 'TaskController');
 
     // Tasks Calendar
-    // Route::resource('tasks-calendars', 'TasksCalendarController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
+    Route::resource('tasks-calendars', 'TasksCalendarController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
 
     // Financial Access Type
     Route::delete('financial-access-types/destroy', 'FinancialAccessTypeController@massDestroy')->name('financial-access-types.massDestroy');
