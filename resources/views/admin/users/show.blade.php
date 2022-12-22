@@ -98,7 +98,7 @@
                             {{ trans('cruds.user.fields.is_nik_valid') }}
                         </th>
                         <td>
-                            <input type="checkbox" disabled="disabled" {{ $user->is_nik_valid ? 'checked' : '' }}>
+                            <input type="checkbox" disabled="disabled" checked>
                         </td>
                     </tr>
                     <tr>
@@ -106,7 +106,7 @@
                             {{ trans('cruds.user.fields.tempat_lahir') }}
                         </th>
                         <td>
-                            {{ $user->tempat_lahir }}
+                            {{ $user->tempat_lahir }}&nbsp;&nbsp;&nbsp;<input type="checkbox" disabled="disabled" checked>
                         </td>
                     </tr>
                     <tr>
@@ -114,7 +114,7 @@
                             {{ trans('cruds.user.fields.tanggal_lahir') }}
                         </th>
                         <td>
-                            {{ $user->tanggal_lahir }}
+                            {{ $user->tanggal_lahir }}&nbsp;&nbsp;&nbsp;<input type="checkbox" disabled="disabled" checked>
                         </td>
                     </tr>
                     <tr>
@@ -122,7 +122,7 @@
                             {{ trans('cruds.user.fields.jenis_kelamin') }}
                         </th>
                         <td>
-                            {{ App\Models\User::JENIS_KELAMIN_SELECT[$user->jenis_kelamin] ?? '' }}
+                            {{ App\Models\User::JENIS_KELAMIN_SELECT[$user->jenis_kelamin] ?? '' }}&nbsp;&nbsp;&nbsp;<input type="checkbox" disabled="disabled" checked>
                         </td>
                     </tr>
                     <tr>

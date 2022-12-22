@@ -36,7 +36,7 @@
                             {{ trans('cruds.enterprise.fields.is_nib_valid') }}
                         </th>
                         <td>
-                            <input type="checkbox" disabled="disabled" {{ $enterprise->is_nib_valid ? 'checked' : '' }}>
+                            <input type="checkbox" disabled="disabled" checked>
                         </td>
                     </tr>
                     <tr>
@@ -52,7 +52,7 @@
                             {{ trans('cruds.enterprise.fields.skala_usaha') }}
                         </th>
                         <td>
-                            {{ App\Models\Enterprise::SKALA_USAHA_SELECT[$enterprise->skala_usaha] ?? '' }}
+                            {{ App\Models\Enterprise::SKALA_USAHA_SELECT[$enterprise->skala_usaha] ?? '' }}&nbsp;&nbsp;&nbsp;<input type="checkbox" disabled="disabled" checked>
                         </td>
                     </tr>
                     <tr>
@@ -60,7 +60,7 @@
                             {{ trans('cruds.enterprise.fields.alamat') }}
                         </th>
                         <td>
-                            {{ $enterprise->alamat }}
+                            {{ $enterprise->alamat }}&nbsp;&nbsp;&nbsp;<input type="checkbox" disabled="disabled" checked>
                         </td>
                     </tr>
                     <tr>
@@ -76,7 +76,7 @@
                             {{ trans('cruds.enterprise.fields.pemilik') }}
                         </th>
                         <td>
-                            {{ $enterprise->pemilik->name ?? '' }}
+                            {{ $enterprise->pemilik->name ?? '' }}&nbsp;&nbsp;&nbsp;<input type="checkbox" disabled="disabled">
                         </td>
                     </tr>
                     <tr>
